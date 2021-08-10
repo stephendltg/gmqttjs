@@ -5403,36 +5403,53 @@ const importMeta = {
 };
 const __dirname = new URL(".", importMeta.url).pathname;
 var binaryPath;
+var yamlPath;
 if (Deno.build.os === "windows") {
     binaryPath = join2(__dirname, "bin", "gmqttd-win32-amd64.exe").slice(1);
+    yamlPath = join2(__dirname, "bin", "gmqttd.yml").slice(1);
 } else if (Deno.build.os === "darwin") {
     warning("⚠ Unsupported platform: " + Deno.build.os + " Cooming soon!");
 } else if (Deno.build.os === "linux") {
     binaryPath = join2(__dirname, "bin", "gmqttd-linux-amd64");
+    yamlPath = join2(__dirname, "bin", "gmqttd.yml");
 } else {
     critical("⚠ Unsupported platform: " + Deno.build.os);
 }
 if (!binaryPath) {
     Deno.exit(0);
 }
-let args = parse3(Deno.args);
-if (args.c) {
-    try {
-        const yamlFile = Deno.readFileSync(args.c);
-        const yamltext = new TextDecoder("utf-8").decode(yamlFile);
-        let data = parse4(yamltext);
-        data.listeners.forEach((item)=>{
-            info(`${format3(new Date(), "MM-dd-yyyy HH:mm:ss.SSS")}  ${item.websocket ? 'Websocket server' : 'TCP server'} listen on ["${item.address}"]`);
-        });
-    } catch (e) {
-        critical(e);
-    }
+let processArgs = [
+    ...new Set([
+        ...[
+            'start'
+        ],
+        ...Deno.args
+    ])
+];
+const args = parse3(processArgs);
+if (!args.c) {
+    args.c = yamlPath;
+    processArgs = [
+        "start",
+        "-c",
+        args.c
+    ];
 }
-info(`${format3(new Date(), "MM-dd-yyyy HH:mm:ss.SSS")}  MQTT Server start ...`);
+try {
+    const yamlFile = Deno.readFileSync(args.c);
+    const yamltext = new TextDecoder("utf-8").decode(yamlFile);
+    let data = parse4(yamltext);
+    data.listeners.forEach((item)=>{
+        info(`${format3(new Date(), "MM-dd-yyyy HH:mm:ss.SSS")}  ${item.websocket ? 'Websocket server' : 'TCP server'} listen on ["${item.address}"]`);
+    });
+    info(`${format3(new Date(), "MM-dd-yyyy HH:mm:ss.SSS")}  MQTT Server start ...`);
+} catch (e) {
+    critical(e);
+}
 const gmqtt = Deno.run({
     cmd: [
         binaryPath,
-        ...Deno.args
+        ...processArgs
     ],
     stdout: "piped",
     stderr: "piped"

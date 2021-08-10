@@ -10,13 +10,16 @@ import { format } from "https://deno.land/std@0.104.0/datetime/mod.ts";
 const __dirname = new URL(".", import.meta.url).pathname;
 
 var binaryPath;
+var yamlPath;
 
 if (Deno.build.os === "windows") {
   binaryPath = join(__dirname, "bin", "gmqttd-win32-amd64.exe").slice(1);
+  yamlPath = join(__dirname, "bin", "gmqttd.yml").slice(1);
 } else if (Deno.build.os === "darwin") {
   log.warning("⚠ Unsupported platform: " + Deno.build.os + " Cooming soon!");
 } else if (Deno.build.os === "linux") {
   binaryPath = join(__dirname, "bin", "gmqttd-linux-amd64");
+  yamlPath = join(__dirname, "bin", "gmqttd.yml");
 } else {
   log.critical("⚠ Unsupported platform: " + Deno.build.os);
 }
@@ -26,28 +29,32 @@ if (!binaryPath) {
 }
 
 // Parse args
-const args = parse(Deno.args);
+let processArgs = [...new Set([...['start'] ,...Deno.args])]
+const args = parse(processArgs);
 
-if (args.c) {
-  // Read args
-  try {
-    const yamlFile = Deno.readFileSync(args.c);
-    const yamltext = new TextDecoder("utf-8").decode(yamlFile)
-    let data = yamlParse(yamltext) as Record<string, any>
-    // Bind TCP/WS
-    data.listeners.forEach((item:any) => {
-      log.info(`${format(new Date(), "MM-dd-yyyy HH:mm:ss.SSS")}  ${item.websocket ? 'Websocket server': 'TCP server'} listen on ["${item.address}"]` )
-    });
-  } catch(e){
-    log.critical(e)
-  }
+if (!args.c) {
+  args.c = yamlPath
+  processArgs = [ "start", "-c", args.c ]
 }
 
-log.info(`${format(new Date(), "MM-dd-yyyy HH:mm:ss.SSS")}  MQTT Server start ...`);
+// Read config yaml
+try {
+  const yamlFile = Deno.readFileSync(args.c);
+  const yamltext = new TextDecoder("utf-8").decode(yamlFile)
+  let data = yamlParse(yamltext) as Record<string, any>
+  // Bind TCP/WS
+  data.listeners.forEach((item:any) => {
+    log.info(`${format(new Date(), "MM-dd-yyyy HH:mm:ss.SSS")}  ${item.websocket ? 'Websocket server': 'TCP server'} listen on ["${item.address}"]` )
+  });
+  log.info(`${format(new Date(), "MM-dd-yyyy HH:mm:ss.SSS")}  MQTT Server start ...`);
+} catch(e){
+  log.critical(e)
+}
+
 
 // create webview
 const gmqtt = Deno.run({
-  cmd: [binaryPath, ...Deno.args],
+  cmd: [binaryPath, ...processArgs],
   stdout: "piped",
   stderr: "piped",
 });
