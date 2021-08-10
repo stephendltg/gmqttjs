@@ -26,7 +26,7 @@ if (!binaryPath) {
 }
 
 // Parse args
-let args = parse(Deno.args);
+const args = parse(Deno.args);
 
 if (args.c) {
   // Read args
@@ -54,7 +54,6 @@ const gmqtt = Deno.run({
 
 // await its completion
 const { code } = await gmqtt.status();
-
 const rawOutput = await gmqtt.output();
 const rawError = await gmqtt.stderrOutput();
 
