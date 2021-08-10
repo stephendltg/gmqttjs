@@ -1,10 +1,7 @@
 {
   "name": "gmqttjs",
-  "version": "0.0.8",
-  "description": "Binary mqtt with js",
-  "engines": {
-    "go": "1.16"
-  },
+  "version": "0.0.1",
+  "description": "Launcher mqtt for node & deno",
   "os": [
     "darwin",
     "linux",
@@ -36,7 +33,7 @@
   },
   "keywords": [
     "golang",
-    "webview"
+    "mqtt"
   ],
   "author": "stephendltg",
   "license": "ISC",
