@@ -1,0 +1,54 @@
+{
+  "name": "gmqttjs",
+  "version": "0.0.8",
+  "description": "Binary mqtt with js",
+  "engines": {
+    "go": "1.16"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "contributors": [
+    "stephen@epyo.eu"
+  ],
+  "scripts": {
+    "prepare": "husky install",
+    "release": "standard-version",
+    "prerelease": "standard-version -- --prerelease",
+    "fix": "standard-version -- --release-as minor",
+    "bin": "bin/gmqttd-linux-amd64 start -c bin/gmqttd.yml",
+    "node:run": "node cli.js start -c bin/gmqttd.yml",
+    "deno": "deno run --allow-all --watch gmqttd.ts start -c bin/gmqttd.yml",
+    "deno:tools": "deno info && deno fmt gmqttd.ts && deno lint gmqtt.ts",
+    "deno:bundle": "deno bundle gmqttd.ts bin/gmqtt.bundle.js",
+    "deno:bundle:run": "deno run --allow-env --allow-run bin/gmqtt.bundle.js start -c bin/gmqttd.yml",
+    "deno:build": "deno compile --allow-env --allow-run --output bin/denomqtt gmqttd.ts",
+    "deno:build:run": "bin/denomqtt start -c ./bin/gmqttd.yml"
+  },
+  "bin": {
+    "gmqtt": "cli.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stephendltg/gmqttjs.git"
+  },
+  "keywords": [
+    "golang",
+    "webview"
+  ],
+  "author": "stephendltg",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/stephendltg/gmqttjs/issues"
+  },
+  "homepage": "https://github.com/stephendltg/gmqttjs#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^13.1.0",
+    "@commitlint/config-conventional": "^13.1.0",
+    "husky": "^7.0.1",
+    "standard-version": "^9.3.1"
+  },
+  "dependencies": {}
+}
