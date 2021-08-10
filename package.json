@@ -20,8 +20,8 @@
     "deno": "deno run --allow-all --watch gmqttd.ts start -c bin/gmqttd.yml",
     "deno:tools": "deno info && deno fmt gmqttd.ts && deno lint gmqtt.ts",
     "deno:bundle": "deno bundle gmqttd.ts bin/gmqtt.bundle.js",
-    "deno:bundle:run": "deno run --allow-env --allow-run bin/gmqtt.bundle.js start -c bin/gmqttd.yml",
-    "deno:build": "deno compile --allow-env --allow-run --output bin/denomqtt gmqttd.ts",
+    "deno:bundle:run": "deno run --allow-env --allow-run --allow-read bin/gmqtt.bundle.js start -c bin/gmqttd.yml",
+    "deno:build": "deno compile --allow-env --allow-run --allow-read --output bin/denomqtt gmqttd.ts",
     "deno:build:run": "bin/denomqtt start -c ./bin/gmqttd.yml"
   },
   "bin": {

@@ -1,7 +1,11 @@
-#!/usr/bin/env deno run --allow-env --allow-run
+#!/usr/bin/env deno run --allow-env --allow-run --allow-read
 
-import { join } from "https://deno.land/std@0.103.0/path/mod.ts";
-import * as log from "https://deno.land/std@0.103.0/log/mod.ts";
+import { join } from "https://deno.land/std@0.104.0/path/mod.ts";
+import * as log from "https://deno.land/std@0.104.0/log/mod.ts";
+import { parse } from "https://deno.land/std@0.104.0/flags/mod.ts";
+import { parse as yamlParse } from 'https://deno.land/std@0.104.0/encoding/yaml.ts';
+import { format } from "https://deno.land/std@0.104.0/datetime/mod.ts";
+
 
 const __dirname = new URL(".", import.meta.url).pathname;
 
@@ -21,6 +25,26 @@ if (!binaryPath) {
   Deno.exit(0);
 }
 
+// Parse args
+let args = parse(Deno.args);
+
+if (args.c) {
+  // Read args
+  try {
+    const yamlFile = Deno.readFileSync(args.c);
+    const yamltext = new TextDecoder("utf-8").decode(yamlFile)
+    let data = yamlParse(yamltext) as Record<string, any>
+    // Bind TCP/WS
+    data.listeners.forEach((item:any) => {
+      log.info(`${format(new Date(), "MM-dd-yyyy HH:mm:ss.SSS")}  ${item.websocket ? 'Websocket server': 'TCP server'} listen on ["${item.address}"]` )
+    });
+  } catch(e){
+    log.critical(e)
+  }
+}
+
+log.info(`${format(new Date(), "MM-dd-yyyy HH:mm:ss.SSS")}  MQTT Server start ...`);
+
 // create webview
 const gmqtt = Deno.run({
   cmd: [binaryPath, ...Deno.args],
@@ -38,7 +62,7 @@ if (code === 0) {
   await Deno.stdout.write(rawOutput);
 } else {
   const errorString = new TextDecoder().decode(rawError);
-  console.log(errorString);
+  log.warning(errorString);
 }
 
 Deno.exit(code);
