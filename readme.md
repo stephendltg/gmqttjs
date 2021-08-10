@@ -36,9 +36,3 @@ gmqttd [options]
 
 ```
 
-## INSTALL AND REMOVE DEB
-
-```
-sudo dpkg -i nom_du_paquet.deb
-sudo apt-get remove nom_du_paquet
-```
