@@ -115,7 +115,7 @@ plugins:
   auth:
     # Password hash type. (plain | md5 | sha256 | bcrypt)
     # Default to MD5.
-    hash: md5
+    hash: plain
     # The file to store password. If it is a relative path, it locates in the same directory as the config file.
     # (e.g: ./gmqtt_password => /etc/gmqtt/gmqtt_password.yml)
     # Defaults to ./gmqtt_password.yml
@@ -155,9 +155,9 @@ plugins:
 plugin_order:
   # Uncomment auth to enable authentication.
   # - auth
-  - prometheus
+  # - prometheus
   - admin
-  - federation
+  # - federation
 log:
   level: info # debug | info | warn | error
   format: text # json | text
