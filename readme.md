@@ -15,10 +15,8 @@ npm install --global .
 ```
 gmqtt [options]
 
-  start
-
   -c config string
-     The configuration file path (default "/etc/gmqtt/gmqttd.yml")
+     The configuration file path (default "./bin/gmqttd.yml")
 
 ```
 

@@ -16,7 +16,7 @@
     "prerelease": "standard-version -- --prerelease",
     "fix": "standard-version -- --release-as minor",
     "bin": "bin/gmqttd-linux-amd64 start -c bin/gmqttd.yml",
-    "node:run": "node cli.js start -c bin/gmqttd.yml",
+    "start": "node cli.js",
     "deno": "deno run --allow-all --watch gmqttd.ts",
     "deno:tools": "deno info && deno fmt gmqttd.ts && deno lint gmqtt.ts",
     "deno:bundle": "deno bundle gmqttd.ts bin/gmqtt.bundle.js",
@@ -47,5 +47,8 @@
     "husky": "^7.0.1",
     "standard-version": "^9.3.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "js-yaml": "^4.1.0",
+    "yargs-parser": "^20.2.9"
+  }
 }
