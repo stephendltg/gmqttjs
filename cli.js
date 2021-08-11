@@ -40,8 +40,9 @@ try {
 
 // Run
 try {
-  child_process.execFileSync(binaryPath, processArgs, {
+  child_process.execFileSync(binaryPath, processArgs.filter( x => x != '-d' ), {
     cwd: process.cwd(),
+    stdio: args.d ? 'inherit' : 'pipe'
   });
 } catch (err) {
   process.exitCode = 1;

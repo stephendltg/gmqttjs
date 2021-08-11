@@ -15,6 +15,7 @@ npm install --global .
 ```
 gmqtt [options]
 
+  -d debug
   -c config string
      The configuration file path (default "./bin/gmqttd.yml")
 

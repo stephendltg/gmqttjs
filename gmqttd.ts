@@ -61,8 +61,9 @@ const gmqtt = Deno.run({
   stderr: "piped",
 });
 
-// TCP status
+// Defer
 setTimeout(() => {
+  // TCP status
   Deno.connect({ port: 1883 })
     .then((conn) => {
       log.info(
