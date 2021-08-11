@@ -29,6 +29,7 @@ deno install -f -A gmqttd.ts
 ```
 gmqttd [options]
 
+  -d debug
   -c config string
      The configuration file path (default "./bin/gmqttd.yml")
 

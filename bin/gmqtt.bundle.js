@@ -5421,7 +5421,7 @@ if (!binaryPath) {
 let processArgs = [
     ...new Set([
         ...[
-            'start'
+            "start"
         ],
         ...Deno.args
     ])
@@ -5438,22 +5438,31 @@ if (!args.c) {
 try {
     const yamlFile = Deno.readFileSync(args.c);
     const yamltext = new TextDecoder("utf-8").decode(yamlFile);
-    let data = parse4(yamltext);
+    const data = parse4(yamltext);
     data.listeners.forEach((item)=>{
-        info(`${format3(new Date(), "MM-dd-yyyy HH:mm:ss.SSS")}  ${item.websocket ? 'Websocket server' : 'TCP server'} listen on ["${item.address}"]`);
+        info(`${format3(new Date(), "MM-dd-yyyy HH:mm:ss.SSS")}  ${item.websocket ? "Websocket server" : "TCP server"} listen on ["${item.address}"]`);
     });
-    info(`${format3(new Date(), "MM-dd-yyyy HH:mm:ss.SSS")}  MQTT Server start ...`);
 } catch (e) {
     critical(e);
 }
 const gmqtt = Deno.run({
     cmd: [
         binaryPath,
-        ...processArgs
+        ...processArgs.filter((x)=>x != '-d'
+        )
     ],
-    stdout: "piped",
+    stdout: args.d ? "inherit" : "piped",
     stderr: "piped"
 });
+setTimeout(()=>{
+    Deno.connect({
+        port: 1883
+    }).then((conn)=>{
+        info(`${format3(new Date(), "MM-dd-yyyy HH:mm:ss.SSS")}  MQTT Server started ...`);
+        conn.close();
+    }).catch((e)=>warning(e)
+    );
+}, 1000);
 const { code: code1  } = await gmqtt.status();
 const rawOutput = await gmqtt.output();
 const rawError = await gmqtt.stderrOutput();

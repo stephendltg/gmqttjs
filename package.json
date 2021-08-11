@@ -17,11 +17,11 @@
     "fix": "standard-version -- --release-as minor",
     "bin": "bin/gmqttd-linux-amd64 start -c bin/gmqttd.yml",
     "start": "node cli.js",
-    "deno": "deno run --allow-all --watch gmqttd.ts",
-    "deno:tools": "deno info && deno fmt gmqttd.ts && deno lint gmqtt.ts",
+    "deno": "deno run --allow-all --watch gmqttd.ts -d",
+    "deno:tools": "deno info && deno fmt gmqttd.ts && deno lint gmqttd.ts",
     "deno:bundle": "deno bundle gmqttd.ts bin/gmqtt.bundle.js",
-    "deno:bundle:run": "deno run --allow-env --allow-run --allow-read bin/gmqtt.bundle.js -c bin/gmqttd.yml",
-    "deno:build": "deno compile --allow-env --allow-run --allow-read --output bin/denomqtt gmqttd.ts",
+    "deno:bundle:run": "deno run --allow-env --allow-run --allow-read --allow-net bin/gmqtt.bundle.js -c bin/gmqttd.yml",
+    "deno:build": "deno compile --allow-env --allow-run --allow-read --allow-net --output bin/denomqtt gmqttd.ts",
     "deno:build:run": "bin/denomqtt -c ./bin/gmqttd.yml"
   },
   "bin": {

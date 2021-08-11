@@ -38,7 +38,7 @@ try {
   console.log(e);
 }
 
-
+// Run
 try {
   child_process.execFileSync(binaryPath, processArgs, {
     cwd: process.cwd(),
