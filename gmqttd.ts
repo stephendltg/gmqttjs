@@ -36,13 +36,20 @@ if (!args.c) {
   processArgs = ["start", "-c", args.c];
 }
 
+// Yaml - interface
+interface listener {
+  websocket: string;
+  address: number;
+}
+
 // Read config yaml
 try {
   const yamlFile = Deno.readFileSync(args.c);
   const yamltext = new TextDecoder("utf-8").decode(yamlFile);
   const data = yamlParse(yamltext) as Record<string, any>;
+  console.log(typeof data);
   // Bind TCP/WS
-  data.listeners.forEach((item: any) => {
+  data.listeners.forEach((item: listener) => {
     log.info(
       `${format(new Date(), "MM-dd-yyyy HH:mm:ss.SSS")}  ${
         item.websocket ? "Websocket server" : "TCP server"
@@ -53,10 +60,9 @@ try {
   log.critical(e);
 }
 
-
 // create webview
 const gmqtt = Deno.run({
-  cmd: [binaryPath, ...processArgs.filter( x => x != '-d' )],
+  cmd: [binaryPath, ...processArgs.filter((x) => x != "-d")],
   stdout: args.d ? "inherit" : "piped",
   stderr: "piped",
 });
