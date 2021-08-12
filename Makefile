@@ -6,7 +6,7 @@ HOMEPAGE := $(shell node -p "require('./package.json').homepage")
 AUTHOR=stephendltg
 NODE=v14.16.1
 NVM=v0.38.0
-DENO=1.12.2
+DENO=1.13.0
 
 install: 
 	@echo "Installing project ${BINARY_NAME}..."

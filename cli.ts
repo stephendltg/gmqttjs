@@ -1,34 +1,52 @@
 #!/usr/bin/env deno run --unstable --allow-env --allow-read --allow-plugin
-import { 
+import {
   ansi,
-  colors,
-  tty,
-  Table,
-  Command,
-  Input,
-  Confirm,
-  Toggle,
-  Number,
-  Select,
+  Cell,
   Checkbox,
-  prompt
-} from "./deps.ts"
-
+  colors,
+  Command,
+  Confirm,
+  Input,
+  Number,
+  prompt,
+  Select,
+  Table,
+  Toggle,
+  tty,
+} from "./deps.ts";
 
 const error = colors.bold.red;
 const warn = colors.bold.yellow;
 const info = colors.bold.blue;
 
+// Clear screen
+tty.cursorSave
+  .cursorHide
+  .cursorTo(0, 0)
+  .eraseScreen();
+
 // help & args
 const { options } = await new Command()
-  .name("cliffy")
+  .name("Moomin MQTT")
   .version("0.1.0")
-  .description("Command line framework for Deno")
-  .option("-s, --silent", "disable output.")
-  .option("-d, --debug [level]", "output extra debugging.")
-  .option("-p, --port <port>", "the port number.")
-  .option("-h, --host [hostname]", "the host name.", { default: "localhost" })
-  .option("-a, --allow [hostname]", "the host name.", { default: "localhost" })
+  .description("Command line for MQTT")
+  .option("-d, --debug [enable:boolean]", "output extra debugging.", {
+    default: false,
+  })
+  .option("-p, --port <port>", "MQTT port number.", {
+    default: 1883,
+    required: true,
+  })
+  .option("-h, --host [hostname:string]", "MQTT host name.", {
+    default: "localhost",
+    required: true,
+  })
+  .option("-u, --username [username:string]", "MQTT username.", {
+    default: null,
+  })
+  .option("-u, --password [password:string]", "MQTT password.", {
+    default: null,
+  })
   .parse(Deno.args);
 
 // Clear screen
@@ -38,11 +56,37 @@ tty.cursorSave
   .eraseScreen();
 
 // Title
-console.log(
-  colors.bold.underline.rgb24("Welcome to Deno.Land!", 0xff3333),
-);
+Table.from([
+  [Cell.from(colors.bold.underline.rgb24("Welcome!", 0xff3333)).colSpan(3)],
+  [],
+])
+  .align("center")
+  .minColWidth(40)
+  .render();
 
-console.log(error("[ERROR]"), "Some error!");
+// Resume
+new Table()
+  .body([
+    ["v0.1.0", Cell.from(info("MOOMIN")).rowSpan(2).colSpan(2)],
+    ["@stephendltg"],
+    [
+      Cell.from(warn("MQTT")).rowSpan(2),
+      options.host,
+      options.port,
+    ],
+    [
+      Cell.from(
+        `username: ${options.username ||
+          "null"} / password: ${options.password || "null"}`,
+      ).colSpan(2),
+    ],
+  ])
+  .border(true)
+  .align("center")
+  .minColWidth(40)
+  .render();
+
+
 
 // scenario
 const result = await prompt([{
@@ -66,7 +110,7 @@ const result = await prompt([{
   message: "How old are you?",
   type: Number,
   before: async ({ animals }, next) => { // executed before age prompt
-    console.log(animals)
+    console.log(animals);
     if (animals?.length === 3) {
       await next(); // run age prompt
     } else {
@@ -76,7 +120,6 @@ const result = await prompt([{
 }]);
 
 console.log(result);
-
 
 // Prompt
 const name: string = await Input.prompt(`What's your name?`);
@@ -115,26 +158,5 @@ const color: string = await Input.prompt({
 
 // Move cursor
 console.log(
-  ansi.cursorUp(2).cursorLeft.eraseDown(0).toString()
+  ansi.cursorUp(2).cursorLeft.eraseDown(0).toString(),
 );
-
-const table: Table = new Table()
-.header(["Name", "Date", "City", "Country"])
-.body([
-  ["Baxter Herman", "Oct 1, 2020", "Harderwijk", "Slovenia"],
-  ["Jescie Wolfe", "Dec 4, 2020", "Alto Hospicio", "Japan"],
-  ["Allegra Cleveland", "Apr 16, 2020", "Avernas-le-Bauduin", "Samoa"],
-  ["Aretha Gamble", "Feb 22, 2021", "Honolulu", "Georgia"],
-])
-.maxColWidth(10)
-.padding(1)
-.indent(2)
-.border(true)
-.render();
-
-table.push(["Aretha Gamble", "Feb 22, 2021", "Honolulu", "Georgia"]);
-table.sort();
-table.render();
-
-// Actions
-console.log("server running at %s:%s", options.host, options.port);

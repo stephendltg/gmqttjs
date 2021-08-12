@@ -12,7 +12,7 @@ export {
 } from "https://deno.land/x/cliffy@v0.19.4/ansi/mod.ts";
 
 /**
- * 
+ *
  */
 export { Command } from "https://deno.land/x/cliffy@v0.19.4/command/mod.ts";
 
@@ -25,11 +25,16 @@ export {
   Input,
   Number,
   prompt,
+  Select,
   Toggle,
-  Select
 } from "https://deno.land/x/cliffy@v0.19.4/prompt/mod.ts";
 
 /**
  * Table
  */
-export { Table } from "https://deno.land/x/cliffy@v0.19.4/table/mod.ts";
+export {
+  Cell,
+  Row,
+  Table,
+} from "https://deno.land/x/cliffy@v0.19.4/table/mod.ts";
+

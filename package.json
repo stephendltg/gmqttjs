@@ -22,7 +22,9 @@
     "deno:bundle": "deno bundle gmqttd.ts bin/gmqtt.bundle.js",
     "deno:bundle:run": "deno run --allow-env --allow-run --allow-read --allow-net bin/gmqtt.bundle.js -c bin/gmqttd.yml",
     "deno:build": "deno compile --allow-env --allow-run --allow-read --allow-net --output bin/denomqtt gmqttd.ts",
-    "deno:build:run": "bin/denomqtt -c ./bin/gmqttd.yml"
+    "deno:build:run": "bin/denomqtt -c ./bin/gmqttd.yml",
+    "deno:cli": "deno run --allow-all --unstable --watch cli.ts",
+    "deno:cli:help": "deno run --allow-all --unstable --watch cli.ts -h -u test"
   },
   "bin": {
     "gmqtt": "cli.js"
