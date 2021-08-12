@@ -65,7 +65,7 @@ Table.from([
   .render();
 
 // Resume
-new Table()
+const table: Table = new Table()
   .body([
     ["v0.1.0", Cell.from(info("MOOMIN")).rowSpan(2).colSpan(2)],
     ["@stephendltg"],
