@@ -38,4 +38,4 @@ export {
   Table,
 } from "https://deno.land/x/cliffy@v0.19.4/table/mod.ts";
 
-import { Client } from 'https://deno.land/x/mqtt/deno/mod.ts';
+export { Client } from 'https://deno.land/x/mqtt/deno/mod.ts';

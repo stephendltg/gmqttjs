@@ -16,7 +16,7 @@
     "prerelease": "standard-version -- --prerelease",
     "fix": "standard-version -- --release-as minor",
     "bin": "bin/gmqttd-linux-amd64 start -c bin/gmqttd.yml",
-    "start": "node cli.js -c bin/gmqttd.yml",
+    "start": "node cli.js -c bin/gmqttd.yml -d",
     "deno": "deno run --allow-all --watch gmqttd.ts",
     "deno:tools": "deno info && deno fmt gmqttd.ts && deno lint gmqttd.ts",
     "deno:bundle": "deno bundle gmqttd.ts bin/gmqtt.bundle.js",

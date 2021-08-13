@@ -13,6 +13,7 @@ import {
   Table,
   Toggle,
   tty,
+  Client
 } from "./deps.ts";
 
 const error = colors.bold.red;
@@ -86,7 +87,18 @@ const table: Table = new Table()
   .minColWidth(40)
   .render();
 
+const decoder = new TextDecoder();
+const client = new Client({ url: `mqtt://${options.host}:${options.port}` }); // Deno and Node.js
+await client.connect();
+await client.subscribe('incoming/#');
 
+client.on('message', (topic :string, payload: Uint8Array) => {
+  console.log(topic, decoder.decode(payload));
+  table.render()
+});
+
+await client.publish('incoming/fsf', 'payload');
+await client.disconnect();
 
 // scenario
 const result = await prompt([{
