@@ -47,7 +47,6 @@ try {
   const yamlFile = Deno.readFileSync(args.c);
   const yamltext = new TextDecoder("utf-8").decode(yamlFile);
   const data = yamlParse(yamltext) as Record<string, any>;
-  console.log(typeof data);
   // Bind TCP/WS
   data.listeners.forEach((item: listener) => {
     log.info(
