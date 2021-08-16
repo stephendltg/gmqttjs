@@ -11,7 +11,7 @@ var binaryPath;
 if (process.platform === "win32") {
   binaryPath = path.join(__dirname, "bin", "gmqttd-win32-amd64.exe");
 } else if (process.platform === "darwin") {
-  throw new Error("Unsupported platform: " + process.platform + " Cooming soon!");
+  binaryPath = path.join(__dirname, "bin", "gmqttd-darwin-amd64");
 } else if (process.platform === "linux") {
   binaryPath = path.join(__dirname, "bin", "gmqttd-linux-amd64");
 } else {

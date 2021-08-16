@@ -531,7 +531,7 @@ function basename(path, ext = "") {
                 }
                 if (extIdx >= 0) {
                     if (code === ext.charCodeAt(extIdx)) {
-                        if ((--extIdx) === -1) {
+                        if (--extIdx === -1) {
                             end = i;
                         }
                     } else {
@@ -915,7 +915,7 @@ function basename1(path, ext = "") {
                 }
                 if (extIdx >= 0) {
                     if (code === ext.charCodeAt(extIdx)) {
-                        if ((--extIdx) === -1) {
+                        if (--extIdx === -1) {
                             end = i;
                         }
                     } else {
@@ -5398,7 +5398,7 @@ function format3(date, formatString1) {
     return formatter.format(date);
 }
 const importMeta = {
-    url: "file:///home/stephen/github/gmqttjs/gmqttd.ts",
+    url: "file:///Users/stephendeletang/Documents/github/gmqttjs/gmqttd.ts",
     main: import.meta.main
 };
 const __dirname = new URL(".", importMeta.url).pathname;
@@ -5408,7 +5408,8 @@ if (Deno.build.os === "windows") {
     binaryPath = join2(__dirname, "bin", "gmqttd-win32-amd64.exe").slice(1);
     yamlPath = join2(__dirname, "bin", "gmqttd.yml").slice(1);
 } else if (Deno.build.os === "darwin") {
-    warning("⚠ Unsupported platform: " + Deno.build.os + " Cooming soon!");
+    binaryPath = join2(__dirname, "bin", "gmqttd-darwin-amd64");
+    yamlPath = join2(__dirname, "bin", "gmqttd.yml");
 } else if (Deno.build.os === "linux") {
     binaryPath = join2(__dirname, "bin", "gmqttd-linux-amd64");
     yamlPath = join2(__dirname, "bin", "gmqttd.yml");
@@ -5448,7 +5449,7 @@ try {
 const gmqtt = Deno.run({
     cmd: [
         binaryPath,
-        ...processArgs.filter((x)=>x != '-d'
+        ...processArgs.filter((x)=>x != "-d"
         )
     ],
     stdout: args.d ? "inherit" : "piped",

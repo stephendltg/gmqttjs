@@ -15,7 +15,8 @@ if (Deno.build.os === "windows") {
   binaryPath = join(__dirname, "bin", "gmqttd-win32-amd64.exe").slice(1);
   yamlPath = join(__dirname, "bin", "gmqttd.yml").slice(1);
 } else if (Deno.build.os === "darwin") {
-  log.warning("⚠ Unsupported platform: " + Deno.build.os + " Cooming soon!");
+  binaryPath = join(__dirname, "bin", "gmqttd-darwin-amd64");
+  yamlPath = join(__dirname, "bin", "gmqttd.yml");
 } else if (Deno.build.os === "linux") {
   binaryPath = join(__dirname, "bin", "gmqttd-linux-amd64");
   yamlPath = join(__dirname, "bin", "gmqttd.yml");
