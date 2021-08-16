@@ -1,6 +1,6 @@
 {
   "name": "gmqttjs",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Launcher mqtt for node & deno",
   "os": [
     "darwin",

@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4](https://github.com/stephendltg/gmqttjs/compare/v0.0.3...v0.0.4) (2021-08-16)
+
+
+### Features
+
+* **cli:** add cli deno ([102e6ca](https://github.com/stephendltg/gmqttjs/commit/102e6ca450773e89ac1833bf8eb5e90301daca6c))
+* **clideno:** add table ([08138b8](https://github.com/stephendltg/gmqttjs/commit/08138b80e3d1e109b5113ffd23729e01a3a9c66d))
+* **darwin:** add support darwin deno/nodejs ([8416c5e](https://github.com/stephendltg/gmqttjs/commit/8416c5e6fdb7a3973e21997762fae3bf1b92f3e1))
+* **mqtt:** add mqtt library ([fa31935](https://github.com/stephendltg/gmqttjs/commit/fa31935fd31132756e354ae8f0bcab499e943d06))
+
+
+### Bug Fixes
+
+* **deno:** type ([e63d1a4](https://github.com/stephendltg/gmqttjs/commit/e63d1a4cace705775324727623c976f63bbb2f72))
+
 ### [0.0.3](https://github.com/stephendltg/gmqttjs/compare/v0.0.2...v0.0.3) (2021-08-11)
 
 ### 0.0.2 (2021-08-11)
