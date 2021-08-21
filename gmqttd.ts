@@ -60,7 +60,7 @@ try {
   log.critical(e);
 }
 
-// create webview
+// create broker
 const gmqtt = Deno.run({
   cmd: [binaryPath, ...processArgs.filter((x) => x != "-d")],
   stdout: args.d ? "inherit" : "piped",
